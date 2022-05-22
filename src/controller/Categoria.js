@@ -24,7 +24,7 @@ const findCategorias = async (id) => {
 
 const createCategorias = async (payload) => {
     try {
-        return await Categoria.create( {payload})
+        return await Categoria.create( {nome: payload.nome} )
     } catch (error) {
         throw error
     }
@@ -32,7 +32,8 @@ const createCategorias = async (payload) => {
 
 const updateCategorias = async (payload, id) => {
     try {
-        return await Categoria.update( {payload},{where:{id}})
+        console.log('payload => ', payload, id)
+        return await Categoria.update( {nome: payload.nome},{where:{id}})
     } catch (error) {
         throw error
     }
