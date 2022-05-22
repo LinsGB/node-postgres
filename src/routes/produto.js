@@ -5,8 +5,8 @@ import {idValidator, categoriaIdValidator, nameValidator, validateJson} from '..
 const routes = Router()
 
 routes.get('/produtos', async (req, res) =>{
-    await listProdutos().then(categorias => {
-        res.json({categorias})
+    await listProdutos().then(produtos => {
+        res.json({produtos})
     }).catch(error => {
         return res.status(500).json( error );
     })
@@ -15,8 +15,8 @@ routes.get('/produtos', async (req, res) =>{
 routes.get('/produto/:id', idValidator, async (req, res) =>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
-    findProdutos(req.params.id).then(categorias => {
-        res.json({categorias})
+    findProdutos(req.params.id).then(produtos => {
+        res.json({produtos})
     }).catch(error => {
         return res.status(500).json( error );
     })
@@ -25,8 +25,8 @@ routes.get('/produto/:id', idValidator, async (req, res) =>{
 routes.post('/produto', categoriaIdValidator, nameValidator, async (req, res) =>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
-    createProdutos(req.body).then(categorias => {
-        res.json({categorias})
+    createProdutos(req.body).then(produtos => {
+        res.json({produtos})
     }).catch(error => {
         return res.status(500).json( error );
     })
@@ -36,8 +36,8 @@ routes.post('/produto', categoriaIdValidator, nameValidator, async (req, res) =>
 routes.delete('/produto/:id', idValidator, async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
-    deleteProdutos(req.params.id).then(categorias => {
-        res.json({categorias})
+    deleteProdutos(req.params.id).then(produtos => {
+        res.json({produtos})
     }).catch(error => {
         return res.status(500).json( error );
     })
@@ -46,8 +46,8 @@ routes.delete('/produto/:id', idValidator, async (req, res) => {
 routes.put('/produto/:id', idValidator, nameValidator, async (req, res) =>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
-    updateProdutos(req.body.nome, req.params.id).then(categorias => {
-        return res.json({categorias})
+    updateProdutos(req.body.nome, req.params.id).then(produtos => {
+        return res.json({produtos})
     }).catch(error => {
         return res.status(500).json( error );
     })
@@ -66,6 +66,16 @@ routes.post('/produto/upload', async (req, res) =>{
         }
     }
     return res.json({produtos})
+})
+
+routes.get('/produtos/download', async (req, res) => {
+    listProdutos().then(produtos => {
+        console.log({produtos})
+        res.contentType('text/plain');
+        return res.status(200).attachment(`produtos.json`).send(JSON.stringify({produtos}))
+    }).catch(error => {
+        return res.status(500).json( error );
+    })
 })
 
 
