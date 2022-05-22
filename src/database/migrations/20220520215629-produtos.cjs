@@ -2,7 +2,7 @@
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('Produtos', { 
+    await queryInterface.createTable('produto', { 
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -13,13 +13,13 @@ module.exports = {
       categoria_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Categorias', key: 'id'},
+        references: { model: 'categoria', key: 'id'},
         ondDelete: 'Restrict'
       }
     });
   },
 
   async down (queryInterface) {
-    await queryInterface.dropTable('Produtos');
+    await queryInterface.dropTable('produto');
   }
 };

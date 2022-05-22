@@ -1,7 +1,8 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/sequelize.js';
 
-const Produto = sequelize.define('Produto', {
+class Produto extends Model {}
+Produto.init({
   nome: {
     type: DataTypes.STRING,
     allowNull: false
@@ -9,9 +10,13 @@ const Produto = sequelize.define('Produto', {
   categoriaId: {
     type: DataTypes.INTEGER,
     allowNull: false
-  }
+  },
 }, {
-    underscored: true
-});
-
+    underscored: true,
+    tableName:'produto',
+    timestamps: false,
+    sequelize,
+    modelName:'produto'
+}
+)
 export{Produto}
