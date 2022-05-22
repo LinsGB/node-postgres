@@ -25,7 +25,7 @@ routes.get('/categoria/:id', idValidator, async (req, res) =>{
 routes.post('/categoria', bodyValidator, async (req, res) =>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
-    createCategorias(req.body).then(categorias => {
+    createCategorias(req.body.nome).then(categorias => {
         res.json({categorias})
     }).catch(error => {
         return res.status(500).json( error );
@@ -46,7 +46,7 @@ routes.delete('/categoria/:id', idValidator, async (req, res) => {
 routes.put('/categoria/:id', idValidator, bodyValidator, async (req, res) =>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
-    updateCategorias(req.body, req.params.id).then(categorias => {
+    updateCategorias(req.body.nome, req.params.id).then(categorias => {
         res.json({categorias})
     }).catch(error => {
         return res.status(500).json( error );

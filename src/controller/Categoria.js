@@ -22,18 +22,18 @@ const findCategorias = async (id) => {
     }
 }
 
-const createCategorias = async (payload) => {
+const createCategorias = async (nome) => {
     try {
-        return await Categoria.create( {nome: payload.nome} )
+        return await Categoria.create( {nome} )
     } catch (error) {
         throw error
     }
 }
 
-const updateCategorias = async (payload, id) => {
+const updateCategorias = async (nome, id) => {
     try {
         console.log('payload => ', payload, id)
-        return await Categoria.update( {nome: payload.nome},{where:{id}})
+        return await Categoria.update( {nome},{where:{id}})
     } catch (error) {
         throw error
     }
