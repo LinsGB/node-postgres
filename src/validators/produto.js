@@ -1,5 +1,6 @@
 import {idValidator} from './categoria.js'
 import {checkSchema} from 'express-validator'
+import validator from 'is-my-json-valid'
 
 const nameValidator = checkSchema({nome: {
     in: ['params', 'body'],
@@ -8,11 +9,36 @@ const nameValidator = checkSchema({nome: {
 }})
 
 const categoriaIdValidator = checkSchema({
-categoriaId: {
-    in: ['categoriaId', 'body'],
-    errorMessage: 'Categoria invalida',
-    isInt: true,
-    toInt: true,
-}})
+    categoriaId: {
+        in: ['categoriaId', 'body'],
+        errorMessage: 'Categoria invalida',
+        isInt: true,
+        toInt: true,
+    }
+})
 
-export {idValidator, categoriaIdValidator, nameValidator}
+const validateJson = validator({
+    required: true,
+    type: 'object',
+    properties: {
+        produtos: {
+        required: true,
+        type: 'array',
+        items: {
+            additionalProperties: false,
+            properties: {
+                nome: {
+                    required: true,
+                    type: 'string',
+                },
+                categoriaId: {
+                    required: true,
+                    type: 'number',
+                }
+            }
+        }
+        }
+    }
+})
+
+export {idValidator, categoriaIdValidator, nameValidator, validateJson}

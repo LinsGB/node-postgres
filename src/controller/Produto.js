@@ -16,11 +16,10 @@ const findProdutos = async (id) => {
     }
 }
 
-const createProdutos = async (payload, id) => {
+const createProdutos = async (payload) => {
     try {
         return await Produto.create(
-            {nome: payload.nome, categoriaId: payload.categoriaId},
-            {where:{id}}
+            {nome: payload.nome, categoriaId: payload.categoriaId}
         )
     } catch (error) {
         throw error
