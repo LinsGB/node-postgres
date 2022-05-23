@@ -7,6 +7,9 @@
 - [Docker](https://www.docker.com/)
 
 ## Startar a api localmente:
+### `npm i`
+para criar baixar as dependencias
+
 ### `docker-compose up`
 para criar os containers, a partir desse comando a aplicação já vai estar disponível localmente
 
