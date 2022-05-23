@@ -1,0 +1,14 @@
+{
+    "categorias":[{
+        "nome":"categoriaUpload2",
+        "produtos":[{
+            "nome": "produtoUpload1"
+        },
+        {
+            "nome": "produtoUpload2"
+        },
+        {
+            "nome": "produtoUpload3"
+        }]
+    }]
+}

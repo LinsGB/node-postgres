@@ -53,7 +53,7 @@ routes.put('/produto/:id', idValidator, nameValidator, async (req, res) =>{
     })
 })
 
-routes.post('/produto/upload', async (req, res) =>{
+routes.post('/produtos/upload', async (req, res) =>{
     validateJson(req.body)
     const errors = validateJson.errors
     if (errors) return res.status(400).json({ errors: errors });
@@ -70,14 +70,11 @@ routes.post('/produto/upload', async (req, res) =>{
 
 routes.get('/produtos/download', async (req, res) => {
     listProdutos().then(produtos => {
-        console.log({produtos})
         res.contentType('text/plain');
-        return res.status(200).attachment(`produtos.json`).send(JSON.stringify({produtos}))
+        return res.attachment('produtos.json').send(JSON.stringify({produtos}))
     }).catch(error => {
         return res.status(500).json( error );
     })
 })
-
-
 
 export default routes

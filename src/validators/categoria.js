@@ -1,4 +1,5 @@
 import {checkSchema} from 'express-validator'
+import validator from 'is-my-json-valid'
 
 const idValidator = checkSchema({id: {
     in: ['params', 'query'],
@@ -13,4 +14,36 @@ const bodyValidator = checkSchema({nome: {
     isString: true,
 }})
 
-export {idValidator, bodyValidator}
+const validateJson = validator({
+    required: true,
+    type: 'object',
+    properties: {
+        categorias: {
+            required: true,
+            type: 'array',
+            items:{
+                additionalProperties: false,
+                properties: {
+                    nome: {
+                        required: true,
+                        type: 'string',
+                    },
+                    produtos: {
+                        type: 'array',
+                        items: {
+                            additionalProperties: false,
+                            properties: {
+                                nome: {
+                                    required: true,
+                                    type: 'string',
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+        }
+    }
+})
+
+export {idValidator, bodyValidator, validateJson}

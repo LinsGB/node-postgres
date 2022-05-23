@@ -1,5 +1,6 @@
 import {Categoria} from '../model/Categoria.js'
 import { Produto } from '../model/Produto.js'
+import {sequelize} from '../config/sequelize.js'
 
 
 const listCategorias = async () => {
@@ -22,10 +23,25 @@ const findCategorias = async (id) => {
     }
 }
 
-const createCategorias = async (nome) => {
+const createCategoria = async (nome) => {
     try {
         return await Categoria.create( {nome} )
     } catch (error) {
+        throw error
+    }
+}
+
+const createCategoriasWithProduto = async (nomeCategoria, nomesProdutos) => {
+    const t = await sequelize.transaction()
+    try {
+        const categoria = await Categoria.create( {nome: nomeCategoria}, { transaction: t } )
+        const produto = nomesProdutos && await Promise.all(nomesProdutos.map(async nome => {
+            return await Produto.create({nome, categoriaId: categoria.id}, { transaction: t  })
+        }))
+        await t.commit()
+        return {produtos:produto || [], ...categoria.dataValues}
+    } catch (error) {
+        await t.rollback()
         throw error
     }
 }
@@ -47,5 +63,5 @@ const deleteCategorias = async (id) => {
     }
 }
 
-export {listCategorias, findCategorias, createCategorias,
-    updateCategorias, deleteCategorias}
+export {listCategorias, findCategorias, createCategoria,
+    updateCategorias, deleteCategorias, createCategoriasWithProduto}
