@@ -35,11 +35,11 @@ const createCategoriasWithProduto = async (nomeCategoria, nomesProdutos) => {
     const t = await sequelize.transaction()
     try {
         const categoria = await Categoria.create( {nome: nomeCategoria}, { transaction: t } )
-        const produto = nomesProdutos && await Promise.all(nomesProdutos.map(async nome => {
+        const produto = await Promise.all(nomesProdutos.map(async nome => {
             return await Produto.create({nome, categoriaId: categoria.id}, { transaction: t  })
         }))
         await t.commit()
-        return {produtos:produto || [], ...categoria.dataValues}
+        return {produtos:produto, ...categoria.dataValues}
     } catch (error) {
         await t.rollback()
         throw error
@@ -48,7 +48,6 @@ const createCategoriasWithProduto = async (nomeCategoria, nomesProdutos) => {
 
 const updateCategorias = async (nome, id) => {
     try {
-        console.log('payload => ', payload, id)
         return await Categoria.update( {nome},{where:{id}})
     } catch (error) {
         throw error

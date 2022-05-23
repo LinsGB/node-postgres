@@ -16,7 +16,7 @@ const findProdutos = async (id) => {
     }
 }
 
-const createProdutos = async (payload) => {
+const createProduto = async (payload) => {
     try {
         return await Produto.create(
             {nome: payload.nome, categoriaId: payload.categoriaId}
@@ -45,5 +45,5 @@ const deleteProdutos = async (id) => {
     }
 }
 
-export {listProdutos, findProdutos, createProdutos,
+export {listProdutos, findProdutos, createProduto,
     updateProdutos, deleteProdutos}

@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import {validationResult} from 'express-validator'
-import {createProdutos, deleteProdutos, findProdutos, listProdutos, updateProdutos} from '../controller/Produto.js'
+import {createProduto, deleteProdutos, findProdutos, listProdutos, updateProdutos} from '../controller/Produto.js'
 import {idValidator, categoriaIdValidator, nameValidator, validateJson} from '../validators/produto.js'
 const routes = Router()
 
@@ -25,7 +25,7 @@ routes.get('/produto/:id', idValidator, async (req, res) =>{
 routes.post('/produto', categoriaIdValidator, nameValidator, async (req, res) =>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
-    createProdutos(req.body).then(produtos => {
+    createProduto(req.body).then(produtos => {
         res.json({produtos})
     }).catch(error => {
         return res.status(500).json( error );
@@ -57,10 +57,11 @@ routes.post('/produtos/upload', async (req, res) =>{
     validateJson(req.body)
     const errors = validateJson.errors
     if (errors) return res.status(400).json({ errors: errors });
-    let produtos = []
-    for (const data of req.body.produtos) {
+    const produtos = []
+    for (const produto of req.body.produtos) {
         try {
-            produtos.push({data: await createProdutos(data), success: true})
+            const data = await createProduto(produto)
+            produtos.push({data, success: true})
         } catch (error) {
             produtos.push({data: error, success: false})
         }

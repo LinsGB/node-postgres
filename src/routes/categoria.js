@@ -59,14 +59,12 @@ routes.post('/categorias/upload', async (req, res) =>{
     if (errors) return res.status(400).json({ errors: errors });
     const categorias = []
     for (const categoria of req.body.categorias) {
-        console.log('catgoria => ', categoria)
         try {
             const {produtos, nome} = categoria
             const produtosNames = produtos ? produtos.map(produto => produto.nome) : []
             const data = await createCategoriasWithProduto(nome, produtosNames)
             categorias.push({data, success: true})
         } catch (error) {
-            console.log('error => ', error)
             categorias.push({data: error, success: false})
         }
     }
