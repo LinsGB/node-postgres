@@ -16,6 +16,9 @@ para criar as tabelas no banco postgres que vai estar rodando em um container
 ### `npx sequelize-cli db:seed:all`
 para popular as tabelas
 
+### `docker-compose down`
+para criar os derrubar os container e parar a api
+
 ## Rodar os testes:
 
 ### `npm test`
