@@ -25,13 +25,12 @@
     "express": "^4.18.1",
     "express-validator": "^6.14.0",
     "is-my-json-valid": "^2.20.6",
-    "jest": "^28.1.0",
-    "nodemon": "^2.0.16",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.19.2"
   },
   "devDependencies": {
+    "jest": "^28.1.0",
     "sequelize-cli": "^6.4.1",
     "supertest": "^6.2.3"
   }
